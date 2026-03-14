@@ -50,7 +50,7 @@ class SinglyLinkedList:
         n = self.get_length()
         
         if pos<0 or pos>n:
-            raise IndexError("Invalid Index")
+            raise Exception("Invalid Index Error")
 
         if pos == 0:
             self.insert_at_beginning(val)
@@ -70,6 +70,18 @@ class SinglyLinkedList:
         node.next = current.next
         current.next = node
         return self.head 
+    
+    def search(self, val):
+        current = self.head
+        index = 0
+        while current:
+            if current.data == val:
+                return index
+            current = current.next
+            index += 1
+        return -1
+
+
     
 sll = SinglyLinkedList()
 
@@ -114,3 +126,9 @@ sll.insert_in_middle(91,3)
 print("After Insertion in middle: ")
 sll.display()
 
+############ Search ###########
+n = int(input("Enter the node to search : "))
+if sll.search(n) == -1:
+    print("Not Exist")
+else:
+    print("Node found at index: ",sll.search(n))
