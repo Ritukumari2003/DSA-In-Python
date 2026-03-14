@@ -72,6 +72,8 @@ class SinglyLinkedList:
         return self.head 
     
     def search(self, val):
+        if not self.head:
+            return "Empty List"
         current = self.head
         index = 0
         while current:
@@ -130,5 +132,7 @@ sll.display()
 n = int(input("Enter the node to search : "))
 if sll.search(n) == -1:
     print("Not Exist")
+elif sll.search(n) == "Empty List":
+    print("Empty List")
 else:
     print("Node found at index: ",sll.search(n))
