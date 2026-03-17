@@ -337,85 +337,85 @@ class SinglyLinkedList:
 
         return self.head
         
-    
-sll = SinglyLinkedList()
+if __name__ == '__main__':
+    sll = SinglyLinkedList()
 
-while True:
-    print("\n----- Singly Linked List Menu -----")
-    print("1. Insert at Beginning")
-    print("2. Insert at End")
-    print("3. Insert at Position")
-    print("4. Delete Node")
-    print("5. Search Node")
-    print("6. Display List")
-    print("7. Get Size")
-    print("8. Reverse List")
-    print("9. Exit")
+    while True:
+        print("\n----- Singly Linked List Menu -----")
+        print("1. Insert at Beginning")
+        print("2. Insert at End")
+        print("3. Insert at Position")
+        print("4. Delete Node")
+        print("5. Search Node")
+        print("6. Display List")
+        print("7. Get Size")
+        print("8. Reverse List")
+        print("9. Exit")
 
-    choice = int(input("Enter your choice: "))
+        choice = int(input("Enter your choice: "))
 
-    if choice == 1:
-        val = int(input("Enter value to insert: "))
-        sll.insert_at_beginning(val)
-        print("Node inserted at beginning.")
-        sll.display()
-
-    elif choice == 2:
-        val = int(input("Enter value to insert: "))
-        sll.insert_at_end(val)
-        print("Node inserted at end.")
-        sll.display()
-
-    elif choice == 3:
-        val = int(input("Enter value to insert: "))
-        pos = int(input("Enter position: "))
-        try:
-            sll.insert_in_middle(val, pos)
-            print("Node inserted at position.")
+        if choice == 1:
+            val = int(input("Enter value to insert: "))
+            sll.insert_at_beginning(val)
+            print("Node inserted at beginning.")
             sll.display()
-        except Exception as e:
-            print(e)
 
-    elif choice == 4:
-        val = int(input("Enter value to delete: "))
-        try:
-            sll.delete_node(val)
-            print("Node deleted successfully.")
+        elif choice == 2:
+            val = int(input("Enter value to insert: "))
+            sll.insert_at_end(val)
+            print("Node inserted at end.")
             sll.display()
-        except Exception as e:
-            print(e)
 
-    elif choice == 5:
-        val = int(input("Enter value to search: "))
-        result = sll.search(val)
+        elif choice == 3:
+            val = int(input("Enter value to insert: "))
+            pos = int(input("Enter position: "))
+            try:
+                sll.insert_in_middle(val, pos)
+                print("Node inserted at position.")
+                sll.display()
+            except Exception as e:
+                print(e)
 
-        if result == -1:
-            print("Node does not exist.")
-        elif result == "Empty List":
-            print("List is empty.")
+        elif choice == 4:
+            val = int(input("Enter value to delete: "))
+            try:
+                sll.delete_node(val)
+                print("Node deleted successfully.")
+                sll.display()
+            except Exception as e:
+                print(e)
+
+        elif choice == 5:
+            val = int(input("Enter value to search: "))
+            result = sll.search(val)
+
+            if result == -1:
+                print("Node does not exist.")
+            elif result == "Empty List":
+                print("List is empty.")
+            else:
+                print("Node found at index:", result)
+            sll.display()
+
+        elif choice == 6:
+            print("Linked List:")
+            sll.display()
+
+        elif choice == 7:
+            print("Size of list:", sll.size)
+            sll.display()
+
+        elif choice == 8:
+            try:
+                sll.reverse_list()
+                print("List reversed successfully.")
+                sll.display()
+            except Exception as e:
+                print(e)
+
+        elif choice == 9:
+            print("Exiting program...")
+            break
+
         else:
-            print("Node found at index:", result)
-        sll.display()
-
-    elif choice == 6:
-        print("Linked List:")
-        sll.display()
-
-    elif choice == 7:
-        print("Size of list:", sll.size)
-        sll.display()
-
-    elif choice == 8:
-        try:
-            sll.reverse_list()
-            print("List reversed successfully.")
-            sll.display()
-        except Exception as e:
-            print(e)
-
-    elif choice == 9:
-        print("Exiting program...")
-        break
-
-    else:
-        print("Invalid choice. Please try again.")
+            print("Invalid choice. Please try again.")

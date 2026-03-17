@@ -161,6 +161,36 @@ class CircularSinglyLinkedList:
             if current == self.head:
                 break
         raise Exception("Key not found!!!..")
+
+    # Reverses the circular singly linked list
+    # Changes the direction of all links so that the list is reversed
+    # Handles:
+    # 1. Empty list (raises exception)
+    # 2. Single node (no change needed)
+    # 3. Multiple nodes (reverses links and fixes circular connection)
+    def reverse(self):
+        if self.is_empty():
+            raise Exception("List is empty")
+        
+        if self.head.next == self.head:
+            return self.head
+
+        prev = None
+        current = self.head
+
+        while True:
+            next = current.next
+            current.next = prev
+            prev = current
+            current = next
+
+            if current == self.head:
+                break
+        
+        self.head.next = prev
+        self.head = prev
+
+        return self.head
     
 if __name__ == '__main__':
     cll = CircularSinglyLinkedList()
@@ -173,7 +203,8 @@ if __name__ == '__main__':
         print("4. Insert at Position")
         print("5. Search Element")
         print("6. Delete Element")
-        print("7. Exit")
+        print("7. Reverse List")
+        print("8. Exit")
 
         choice = int(input("Enter your choice: "))
 
@@ -183,16 +214,19 @@ if __name__ == '__main__':
         elif choice == 2:
             val = int(input("Enter value: "))
             cll.insert_at_beginning(val)
+            cll.display()
 
         elif choice == 3:
             val = int(input("Enter value: "))
             cll.insert_at_end(val)
+            cll.display()
 
         elif choice == 4:
             val = int(input("Enter value: "))
             pos = int(input("Enter position: "))
             try:
                 cll.insert_in_middle(val, pos)
+                cll.display()
             except Exception as e:
                 print(e)
 
@@ -212,10 +246,18 @@ if __name__ == '__main__':
             try:
                 cll.delete_node(val)
                 print("Deleted successfully")
+                cll.display()
             except Exception as e:
                 print(e)
 
         elif choice == 7:
+            try:
+                cll.reverse()
+                cll.display()
+            except Exception as e:
+                print(e)
+
+        elif choice == 8:
             print("Exiting program...")
             break
 
