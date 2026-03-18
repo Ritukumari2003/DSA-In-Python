@@ -1,21 +1,32 @@
 # Doubly Linked List
+
+# Node class represents each element of the list
+# Each node contains:
+# 1. prev pointer → points to previous node
+# 2. data → stores value
+# 3. next pointer → points to next node
 class Node:
     def __init__(self,data):
         self.prev = None
         self.data = data
         self.next = None
 
+
+# Main class for Doubly Linked List
 class DoublyLinkedList:
+
+    # Initializes an empty list with head = None and size = 0
     def __init__(self):
         self.head = None
         self.size = 0
     
     # Checks whether the list is empty or not
+    # Returns True if list is empty, else False
     def is_empty(self):
         return self.head is None
 
-    # Displays all elements of the circular linked list
-    # Traverses until it comes back to the head
+    # Displays all elements of the doubly linked list
+    # Traverses from head to last node using next pointers
     def display(self):
         if self.is_empty():
             print('Empty List')
@@ -28,6 +39,8 @@ class DoublyLinkedList:
             current = current.next 
         print()
 
+    # Inserts a node at the beginning of the list
+    # Updates head and adjusts prev/next pointers accordingly
     def insert_at_beginning(self, val):
         node = Node(val)
         if self.is_empty():
@@ -43,6 +56,8 @@ class DoublyLinkedList:
         self.size += 1
         return self.head
     
+    # Inserts a node at the end of the list
+    # Traverses to last node and attaches new node
     def insert_at_end(self, val):
         node = Node(val)
         if self.is_empty():
@@ -60,6 +75,8 @@ class DoublyLinkedList:
         self.size += 1
         return self.head
     
+    # Inserts a node at a given position (index-based)
+    # Handles insertion at beginning, end, and middle
     def insert_in_middle(self, val, pos):
         n = self.size
         
@@ -79,6 +96,7 @@ class DoublyLinkedList:
         count = 0
         while count != pos-1:
             current = current.next
+            count += 1
         node.next = current.next
         node.next.prev = node
         current.next = node
@@ -86,6 +104,8 @@ class DoublyLinkedList:
         self.size += 1
         return self.head        
     
+    # Searches for a value in the list
+    # Returns index if found, else returns -1
     def search(self, val):
         if self.is_empty():
             raise Exception("Empty List")
@@ -98,6 +118,11 @@ class DoublyLinkedList:
             index += 1
         return -1
     
+    # Deletes a node with given value
+    # Handles:
+    # 1. Single node deletion
+    # 2. Head node deletion
+    # 3. Middle/last node deletion
     def delete_node(self, val):
         if self.is_empty():
             raise Exception("Empty List")
@@ -113,7 +138,6 @@ class DoublyLinkedList:
             else:
                 raise Exception("Key Not Found!!..") 
 
-
         # delete head node 
         if current.data == val:
             self.head = current.next
@@ -127,7 +151,6 @@ class DoublyLinkedList:
         while current:
             if current.data == val:
                 prev.next = current.next
-                # current.prev = None
                 if current.next:
                     current.next.prev = prev
                 current.next = None
@@ -136,34 +159,99 @@ class DoublyLinkedList:
             prev = current
             current = current.next  
 
-        raise Exception("Key Not Found!!..")              
+        raise Exception("Key Not Found!!..")   
 
+    # Reverses the doubly linked list
+    # Swaps prev and next pointers for each node
+    # Finally updates head to the last processed node
+    def reverse(self):
+        if self.is_empty():
+            raise Exception("Empty List")
 
-dll = DoublyLinkedList()
-# dll.insert_at_beginning(4)
-# dll.insert_at_beginning(14)
-# dll.insert_at_beginning(42)
-# dll.insert_at_beginning(43)
-# dll.display()
+        if self.head.next is None:
+            return self.head
+        
+        current = self.head
 
-dll.insert_at_end(12)
-# dll.insert_at_end(22)
-# dll.insert_at_end(32)
-# dll.insert_at_end(42)
-dll.display()
+        while current:
+            temp = current.prev
+            current.prev = current.next
+            current.next = temp
 
-# dll.insert_in_middle(42,1)
-# dll.display()
-# dll.insert_in_middle(2,0)
-# dll.display()
-# dll.insert_in_middle(21,1)
-# dll.display()
-# dll.insert_in_middle(12,1)
-# dll.display()
+            current = current.prev
+        
+        self.head = temp.prev
+        return self.head         
 
-# print(dll.search(42))
-# print(dll.search(35))
-# print(dll.search(12))
+if __name__ == '__main__':
+    dll = DoublyLinkedList()
 
-dll.delete_node(32)
-dll.display()
+    while True:
+        print("\n===== Doubly Linked List Menu =====")
+        print("1. Display")
+        print("2. Insert at Beginning")
+        print("3. Insert at End")
+        print("4. Insert at Position")
+        print("5. Search")
+        print("6. Delete")
+        print("7. Reverse")
+        print("8. Exit")
+
+        choice = int(input("Enter your choice: "))
+
+        if choice == 1:
+            dll.display()
+
+        elif choice == 2:
+            val = int(input("Enter value: "))
+            dll.insert_at_beginning(val)
+            dll.display()
+
+        elif choice == 3:
+            val = int(input("Enter value: "))
+            dll.insert_at_end(val)
+            dll.display()
+
+        elif choice == 4:
+            val = int(input("Enter value: "))
+            pos = int(input("Enter position: "))
+            try:
+                dll.insert_in_middle(val, pos)
+                dll.display()
+            except Exception as e:
+                print(e)
+
+        elif choice == 5:
+            val = int(input("Enter value to search: "))
+            try:
+                res = dll.search(val)
+                if res == -1:
+                    print("Element not found")
+                else:
+                    print("Element found at index:", res)
+            except Exception as e:
+                print(e)
+
+        elif choice == 6:
+            val = int(input("Enter value to delete: "))
+            try:
+                dll.delete_node(val)
+                print("Deleted successfully")
+                dll.display()
+            except Exception as e:
+                print(e)
+
+        elif choice == 7:
+            try:
+                dll.reverse()
+                print("List reversed")
+                dll.display()
+            except Exception as e:
+                print(e)
+
+        elif choice == 8:
+            print("Exiting...")
+            break
+
+        else:
+            print("Invalid choice!")
