@@ -336,6 +336,32 @@ class SinglyLinkedList:
         self.head = prev
 
         return self.head
+    
+    def middle_element_of_list(self):
+        ############# O(N) Approach ###############
+        # if self.head.next is None:
+        #     return self.head
+        # length = 0
+        # temp = self.head 
+        # while temp:
+        #     length += 1
+        #     temp = temp.next
+        # temp = self.head
+        # count = 0
+        # while count != length//2:
+        #     count += 1
+        #     temp = temp.next
+        # return temp
+
+        ######### Two Pointer Approach ########
+        slow = self.head
+        fast = self.head
+
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+
+        return slow
         
 if __name__ == '__main__':
     sll = SinglyLinkedList()
@@ -350,7 +376,8 @@ if __name__ == '__main__':
         print("6. Display List")
         print("7. Get Size")
         print("8. Reverse List")
-        print("9. Exit")
+        print("9. Middle Element of List")
+        print("10. Exit")
 
         choice = int(input("Enter your choice: "))
 
@@ -412,8 +439,11 @@ if __name__ == '__main__':
                 sll.display()
             except Exception as e:
                 print(e)
-
+        
         elif choice == 9:
+            print("Middle Element is : ", sll.middle_element_of_list().data)
+
+        elif choice == 10:
             print("Exiting program...")
             break
 
