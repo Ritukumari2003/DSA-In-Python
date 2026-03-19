@@ -242,7 +242,51 @@ class CircularDoublyLinkedList:
 
         # Update head to new starting node
         self.head = self.head.next
-        return self.head       
+        return self.head   
+
+    def max_min_ele(self):
+        
+        if self.head is None:
+            raise Exception("Empty List")
+        
+        max_val = float('-inf')
+        min_val = float('inf')
+        current = self.head
+        while current:
+            if current.data > max_val:
+                max_val = current.data
+            if current.data < min_val:
+                min_val = current.data
+            current = current.next
+            if current == self.head:
+                break
+        return max_val, min_val
+    
+    def middle_element_of_list(self):
+        
+        if self.is_empty():
+            raise Exception("List is empty")
+        
+        if self.head.next is None:
+            return self.head
+        
+        ############# O(N) Approach ###############
+        # temp = self.head
+        # count = 0
+        # while count != self.size//2:
+        #     count += 1
+        #     temp = temp.next
+        # return temp
+
+        ######### Two Pointer Approach ########
+        slow = self.head
+        fast = self.head
+
+        while fast.next != self.head and fast.next.next != self.head:
+            slow = slow.next
+            fast = fast.next.next
+
+        return slow       
 
 if __name__ == '__main__':
     cdll = CircularDoublyLinkedList()
@@ -256,7 +300,10 @@ if __name__ == '__main__':
         print("5. Search Element")
         print("6. Delete Element")
         print("7. Reverse List")
-        print("8. Exit")
+        print("8. Get Size")
+        print("9. Middle Element of List")
+        print("10. Maximum and Minimum Value")
+        print("11. Exit")
 
         choice = int(input("Enter your choice: "))
 
@@ -310,6 +357,23 @@ if __name__ == '__main__':
                 print(e)
 
         elif choice == 8:
+            print("Size of list:", cdll.size)
+            cdll.display()
+
+        elif choice == 9:
+            try:
+                print("Middle Element is : ", cdll.middle_element_of_list().data)
+            except Exception as e:
+                print(e)
+
+        elif choice == 10:
+            try:
+                print("Maximum Element is : ", cdll.max_min_ele()[0])
+                print("Minimum Element is : ", cdll.max_min_ele()[1])
+            except Exception as e:
+                print(e)                
+
+        elif choice == 11:
             print("Exiting program...")
             break
 
