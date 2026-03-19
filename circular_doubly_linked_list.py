@@ -104,6 +104,71 @@ class CircularDoublyLinkedList:
             self.size += 1
         return self.head
     
+    def search(self, val):
+        if self.is_empty():
+            raise Exception("Empty List")
+        
+        current = self.head
+        index = 0
+        while True:
+            if current.data == val:
+                return index
+            index += 1
+            current = current.next
+            if current == self.head:
+                break            
+        return -1
+    
+    def delete_node(self, val):
+        # Empty list 
+        if self.is_empty():
+            raise Exception("Empty List")
+        
+        # single node case 
+        if self.head.next == self.head:
+            if self.head.data == val:
+                self.head = None
+                self.size -= 1
+                return self.head
+            else:
+                raise Exception("Key Not Found!!..")
+            
+        current = self.head
+
+        # deletion at beginning 
+        if current.data == val:
+            temp = self.head   
+
+            while temp.next != current:
+                temp = temp.next
+            
+            self.head = current.next
+            temp.next = self.head
+            self.head.prev = temp
+
+            current.next = None
+            current.prev = None
+
+            self.size -= 1
+            return self.head  
+        
+        current = self.head.next
+
+        # delete other nodes
+        while current != self.head:
+            if current.data == val:
+                current.prev.next = current.next
+                current.next.prev = current.prev
+
+                current.prev = None
+                current.next = None
+
+                self.size -= 1
+                return self.head
+            current = current.next
+        raise Exception("Key Not Found!!..")
+        
+    
 cdll = CircularDoublyLinkedList()
 cdll.display()
 
@@ -113,18 +178,28 @@ cdll.insert_at_end(52)
 cdll.insert_at_end(53)
 cdll.insert_at_end(54)
 
-cdll.display()
+# cdll.display()
 
-cdll.insert_at_beginning(10)
-cdll.insert_at_beginning(20)
+# cdll.insert_at_beginning(10)
+# cdll.insert_at_beginning(20)
 
-cdll.display()
+# cdll.display()
 
-cdll.insert_in_middle(56,0)
-cdll.insert_in_middle(56,1)
-cdll.insert_in_middle(56,9)
+# cdll.insert_in_middle(56,0)
+# cdll.insert_in_middle(56,1)
+# cdll.insert_in_middle(56,9)
 # cdll.insert_in_middle(56,10) # Invalid Index
 
+# cdll.display()
+
+# cdll.search(5)   # Empty List Check
+# print(cdll.search(56))
+# print(cdll.search(5))
+# print(cdll.search(7))
+
+cdll.delete_node(5)
+cdll.delete_node(54)
 cdll.display()
+
 
         
