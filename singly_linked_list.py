@@ -362,6 +362,21 @@ class SinglyLinkedList:
             fast = fast.next.next
 
         return slow
+    
+    def max_min_ele(self):
+        if self.head is None:
+            raise Exception("Empty List")
+        
+        max_val = float('-inf')
+        min_val = float('inf')
+        current = self.head
+        while current:
+            if current.data > max_val:
+                max_val = current.data
+            if current.data < min_val:
+                min_val = current.data
+            current = current.next
+        return max_val, min_val
         
 if __name__ == '__main__':
     sll = SinglyLinkedList()
@@ -377,7 +392,8 @@ if __name__ == '__main__':
         print("7. Get Size")
         print("8. Reverse List")
         print("9. Middle Element of List")
-        print("10. Exit")
+        print("10. Maximum and Minimum Value")
+        print("11. Exit")
 
         choice = int(input("Enter your choice: "))
 
@@ -444,6 +460,13 @@ if __name__ == '__main__':
             print("Middle Element is : ", sll.middle_element_of_list().data)
 
         elif choice == 10:
+            try:
+                print("Maximum Element is : ", sll.max_min_ele()[0])
+                print("Minimum Element is : ", sll.max_min_ele()[1])
+            except Exception as e:
+                print(e)                
+
+        elif choice == 11:
             print("Exiting program...")
             break
 
