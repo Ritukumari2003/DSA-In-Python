@@ -1,3 +1,5 @@
+# Stacks using collections module 
+
 # Implemented using data structure called 'deque' which is a doubly linked list 
 # from Python's built-in module 'collections'.
 # deque allows fast insertion and deletion from both ends in O(1) time,
