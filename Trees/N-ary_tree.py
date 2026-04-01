@@ -11,6 +11,8 @@
 # 2. A list of children nodes
 
 from collections import deque
+import math
+
 class TreeNode:
     def __init__(self, data):
         self.data = data
@@ -53,6 +55,27 @@ def levelorder_traversal(node):
 
         for child in curr.children:
             queue.append(child)
+
+def find_max_element(node):
+    if not node:
+        return -math.inf
+    
+    max_val = node.data
+
+    for child in node.children:
+        max_val = max(max_val, find_max_element(child))
+    
+    return max_val
+
+def calHeight(node):
+    if node is None:
+        return 0
+    
+    height = []
+    for child in node.children:
+        height.append(calHeight(child))
+    
+    return max(height, default = 0) + 1
     
 # Creating a N-Ary tree 
 root = TreeNode(10)
@@ -64,10 +87,14 @@ node1.children = [TreeNode(50), TreeNode(60)]
 node2.children = [TreeNode(70)]
 node3.children = [TreeNode(80), TreeNode(90), TreeNode(100)]
 
+print("Pre Order Traversal:")
 preorder_traversal(root)
 print()
+print("Post Order Traversal: ")
 postorder_traversal(root)
 print()
+print("Level Order Traversal: ")
 levelorder_traversal(root)
 print()
-
+print("Maximum Element in the tree: ", find_max_element(root))
+print("Height of the tree: ", calHeight(root))
