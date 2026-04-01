@@ -1,4 +1,5 @@
 from binary_search_tree import BST
+import math
 
 # Function to find the maximum depth (height) of the BST
 # It calculates the longest path from root to any leaf node
@@ -83,7 +84,43 @@ def kth_smallest_ele_BST(node,k):
     inorder_traversal(node, lst)
     return lst[k-1]
 
+# Function to find maximum path sum in BST
+def max_path_sum_BST(node):
+    max_sum = -math.inf
 
+    def helper(node):
+        nonlocal max_sum
+
+        if not node:
+            return 0
+        
+        left_sum = max(helper(node.left), 0)
+        right_sum = max(helper(node.right), 0)
+
+        current_path = node.data + left_sum + right_sum
+        max_sum = max(max_sum, current_path)
+
+        return node.data + max(left_sum, right_sum)
+    
+    helper(node)
+    return max_sum
+
+# Function to find sum of all the left leaf nodes in BST
+def sum_of_left_leaf_child(node):
+    
+    if node is None:
+        return 0
+    
+    leaf_node_sum = 0
+
+    if node.left and not node.left.left and not node.left.right:
+        leaf_node_sum += node.left.data
+    
+    leaf_node_sum += sum_of_left_leaf_child(node.left)
+    leaf_node_sum += sum_of_left_leaf_child(node.right)
+
+    return leaf_node_sum
+    
 # Creating BST object and inserting elements
 root = BST()
 
@@ -104,3 +141,5 @@ print("Sum of all nodes in the tree: ", sum_of_nodes(root.root))
 print("Validate BST: ", validate_BST(root.root))
 print("Lowest common ancestors of nodes: ",lowest_common_ancestor(root.root, root.root.left.right, root.root.right))
 print("Kth smallest element in the BST: ", kth_smallest_ele_BST(root.root, 4))
+print("Max Path sum: ", max_path_sum_BST(root.root))
+print("Sum of all left leaf nodes: ",sum_of_left_leaf_child(root.root))
