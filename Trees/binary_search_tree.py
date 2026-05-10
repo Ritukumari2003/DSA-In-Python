@@ -201,13 +201,11 @@ class BST:
     #         succ = node.right
     #         while succ.left:
     #             succ = succ.left
-
     #         node.val = succ.val
     #         node.right = self.deletion(node.right, succ.data)
         
     #     return node
     # -----------------------------------------------------------------------
-
         
 if __name__ == '__main__':
     bst = BST()
